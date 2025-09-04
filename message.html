@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Messages Wall 💌</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #fddb92, #d1fdff);
+        text-align: center;
+        padding: 20px;
+    }
+    h1 {
+        color: #ff4b5c;
+        margin-bottom: 30px;
+    }
+    form {
+        margin-bottom: 30px;
+    }
+    input, textarea {
+        padding: 10px;
+        width: 300px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+    button.submit-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background-color: #ff4b5c;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button.submit-btn:hover {
+        background-color: #ff2e3c;
+    }
+    #messageWall {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: left;
+    }
+    .message {
+        background: #fff;
+        padding: 10px 15px;
+        margin: 10px 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .hidden {
+        display: none;
+    }
+    .reveal-btn {
+        background-color: #ffd700;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-left: 10px;
+        font-size: 14px;
+    }
+    .reveal-btn:hover {
+        background-color: #ffbf00;
+    }
+</style>
+</head>
+<body>
+
+<h1>Secret Messages Wall BY AVIJIT 💌</h1>
+
+<form id="messageForm">
+    <input type="text" id="friendName" placeholder="Friend's Name" required><br>
+    <textarea id="secretMessage" placeholder="Write your secret/funny message..." rows="4" required></textarea><br>
+    <button type="submit" class="submit-btn">Submit Message</button>
+</form>
+
+<div id="messageWall">
+    <!-- Messages will appear here -->
+</div>
+
+<script>
+    const form = document.getElementById('messageForm');
+    const wall = document.getElementById('messageWall');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('friendName').value.trim();
+        const message = document.getElementById('secretMessage').value.trim();
+
+        if(name && message){
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+
+            // Message initially hidden with reveal button
+            messageDiv.innerHTML = `<strong>${name}:</strong> <span class="hidden">${message}</span>
+                                    <button class="reveal-btn">Reveal</button>`;
+            wall.prepend(messageDiv); // Add on top
+            form.reset();
+
+            // Add click event for reveal button
+            const revealBtn = messageDiv.querySelector('.reveal-btn');
+            const hiddenMsg = messageDiv.querySelector('.hidden');
+            revealBtn.addEventListener('click', function() {
+                hiddenMsg.style.display = 'inline';
+                revealBtn.style.display = 'none';
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
